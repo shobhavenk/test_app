@@ -1,0 +1,39 @@
+<h1>Listing secret_codes</h1>
+
+<table class="table table-striped">
+  <tr>
+    <th>User</th>
+    <th>Code</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @secret_codes.each do |secret_code| %>
+  <tr>
+    <td><%= secret_code.user.try(:email) %></td>
+    <td><%= secret_code.code %></td>
+
+    <td><%= link_to 'Show', secret_code %></td>
+    <% if can? :update, SecretCode %>
+    <td><%= link_to 'Edit', edit_secret_code_path(secret_code) %></td>
+    <td><%= link_to 'Destroy', secret_code, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+    <% end %>
+  </tr>
+<% end %>
+</table>
+
+<br />
+<% if can? :update, SecretCode %>
+<%=form_for :secret_code, url: url_for(  :action => :generate_code ), :html => { :class => "form-horizontal"} do |f| %>
+ 
+  <%= select_tag :times, options_for_select([['1', '1'],['10','10'],['20','20'],['50','50'],['100','100']],:selected => '10') , :class => 'input-large'%>
+  <div>
+    <br />
+   <%= f.submit 'generate_code' , :class => 'btn btn-primary'%>
+  </div>
+  <% end %>
+
+<br />
+<%= link_to 'New Secret code', new_secret_code_path %>
+<% end %>

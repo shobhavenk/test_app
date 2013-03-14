@@ -1,0 +1,10 @@
+<h3><%= link_to 'Back', secret_codes_path %></h3>
+<table class="table table-striped">
+	<th>Name</th>
+	<% @codes.each do |code| %>
+	<tr>
+      <td><%=code.code %></td>
+    </tr>
+    <% end %>
+
+</table>
